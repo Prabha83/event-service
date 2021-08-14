@@ -1,0 +1,16 @@
+{
+    "env": "development",
+    "dbConfig": {
+        "host": "localhost",
+        "port": "5432",
+        "user": "praba",
+        "password": "",
+        "database": "eventbooking_development",
+        "pool": {
+            "min": 0,
+            "max": 5,
+            "idle": 10000
+        }
+    },
+    "secretKey": "secretKey"
+}
