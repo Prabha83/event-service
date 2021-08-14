@@ -33,6 +33,7 @@ describe('Testing Users', () => {
         },
       ]);
 
+      
       (Sequelize as any).authenticate = jest.fn();
       const app = new App([usersRoute]);
       return request(app.getServer()).get(`${usersRoute.path}`).expect(200);
