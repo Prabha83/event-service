@@ -1,0 +1,30 @@
+
+GET http://localhost:3000/event-types HTTP/1.1
+
+###
+
+POST http://localhost:3000/event-types HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Cricket Practice"
+}
+
+###
+
+POST http://localhost:3000/event-types HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Medical Camp"
+}
+###
+
+PATCH http://localhost:3000/event-types/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Cricket Nets"
+}
+
+###

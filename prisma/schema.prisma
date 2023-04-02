@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model EventType {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(200)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Events    Event[]
+
+  @@map("event_types")
+}
+
+model Event {
+  id                Int             @id @default(autoincrement())
+  event_name        String          @db.VarChar(255)
+  event_description String
+  eventType         EventType       @relation(fields: [event_type_id], references: [id])
+  event_type_id     Int
+  event_location    String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  time_begin        DateTime
+  time_end          DateTime
+  EventAttendees    EventAttendee[]
+  EventComments     EventComment[]
+
+  @@map("events")
+}
+
+model EventComment {
+  id        Int      @id @default(autoincrement())
+  event     Event    @relation(fields: [event_Id], references: [id])
+  event_Id  Int
+  comment   String
+  user      User?    @relation(fields: [user_Id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user_Id   Int?
+
+  @@map("event_comments")
+}
+
+model User {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  email         String          @unique
+  description   String
+  EventAttendee EventAttendee[]
+  EventComments EventComment[]
+
+  @@map("users")
+}
+
+model EventAttendee {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [user_Id], references: [id])
+  user_Id   Int
+  event     Event    @relation(fields: [event_Id], references: [id])
+  event_Id  Int
+  status    Status
+  approved  Boolean
+  attended  Boolean
+  updatedAt DateTime @updatedAt
+
+  @@map("event_attendees")
+}
+
+enum Status {
+  YES
+  NO
+}
